@@ -1,0 +1,1 @@
+export const LOCAL_API_ADDRESS = 'http://c830-76-69-64-101.ngrok.io'
