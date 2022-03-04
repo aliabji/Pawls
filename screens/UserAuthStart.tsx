@@ -1,19 +1,14 @@
-import { StyleSheet } from 'react-native';
-import {useEffect} from 'react'
-import EditScreenInfo from '../components/EditScreenInfo';
-// import { Text, View } from '../components/Themed';
+import { View, StyleSheet } from 'react-native';
 import { RootTabScreenProps } from '../types';
-import {View, Text, Card, Button} from 'react-native-ui-lib';
+import { Button, Text} from 'react-native-paper';
 
 export default function UserAuthStart({ navigation }: RootTabScreenProps<'UserAuthStart'>) {
   return (
-    <View flex padding-page backgroundColor="white">
-      <Text heading>Welcome to Pawls!</Text>
-      <Text>Please click below to register or sign in</Text>
-      {/* <Div> */}
-        <Button label="Register" onPress={() => navigation.push('Signup')}></Button>
-        <Button label="Login" onPress={() => navigation.push('Signin')}></Button>      
-      {/* </Div> */}
+    <View>
+      <Text style={{color: "white"}}>Welcome to Pawls!</Text>
+      <Text style={{color: "white"}}>Please click below to register or sign in</Text>
+      <Button mode="contained" style={{marginVertical: 10}} onPress={() => navigation.push('Signup')}>Register</Button>
+      <Button mode="contained" style={{marginVertical: 10}} onPress={() => navigation.push('Signin')}>Login</Button>      
     </View>
   );
 }

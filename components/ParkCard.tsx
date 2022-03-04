@@ -5,36 +5,27 @@ import {googleMapsLinkWithPlaceId} from '../constants/google'
 
 // const parkImage2 = Image.resolveAssetSource(parkImage).uri
 
-export interface ParkDisplayProps {
+export interface ParkCardProps {
     park: any;
+    buttonLabel?: string;
     onButtonPress?: any;
     style?: any;
 }
 
-export function ParkDisplay(props: ParkDisplayProps) {
+export function ParkCard(props: ParkCardProps) {
     return (
         <Card style={{justifyContent:'space-between',margin:10}}>
-            <Card.Cover source={require('../assets/images/park.png')} />
+            <Card.Cover source={require('../assets/images/city-park.png')} />
             <Card.Content>
                 <Title>{props.park.name}</Title>
                 <Paragraph>{props.park.vicinity}</Paragraph>
             </Card.Content>
-            {/* <Card.Title
-                // title={props.park.name}
-                // titleStyle={{color: "white"}}
-                subtitle={props.park.vicinity}
-                left={(props) => <Avatar.Icon {...props} icon="map" onTouchStart={() => console.log("touched")} />}
-                // right={(props) => <IconButton {...props} icon="more-vert" onPress={() => {}} />}
-            /> */}
             <Card.Actions style={{flexDirection: "column"}}>
                 <Button onPress={() => Linking.openURL(googleMapsLinkWithPlaceId(props.park.place_id))}>View in Google Maps</Button>
-                <Button>View Park Details</Button>
+                {props.onButtonPress && (
+                    <Button onPress={props.onButtonPress}>{props.buttonLabel || "View park"}</Button>
+                )}
             </Card.Actions>
-            {/* <Text>{props.park.vicinity}</Text>
-            {props.onButtonPress && (
-                <Button label="Select park" onPress={props.onButtonPress} />
-            )} */}
         </Card>
-
     )
 }

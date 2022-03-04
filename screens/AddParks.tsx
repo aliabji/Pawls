@@ -5,7 +5,8 @@ import {LogOutButton} from '../components/LogOutButton';
 import { RootTabScreenProps } from '../types';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import * as Location from 'expo-location';
-import {ParkDisplay} from '../components/ParkDisplay';
+import {ParkCard} from '../components/ParkCard';
+// import {po} from '../utils/apiService'
 
 export default function AddParks({ navigation, route: {params} }: RootTabScreenProps<'AddParks'>) {
     const [location, setLocation] = useState<any>(undefined)

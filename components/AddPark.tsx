@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react';
 import { Text, View } from '../components/Themed';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import * as Location from 'expo-location';
-import {ParkDisplay} from '../components/ParkDisplay';
+import {ParkCard} from './ParkCard';
 import {listParksApiUrl} from '../constants/google';
 import {createPark} from '../utils/apiService';
 
@@ -51,7 +51,6 @@ export default function AddPark(){
         })
         }
       </ScrollView>
-      <Text>testS</Text>
       <GooglePlacesAutocomplete
         placeholder="parks"
         GooglePlacesSearchQuery={

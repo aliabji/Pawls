@@ -4,7 +4,7 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
 import {getParks} from '../utils/apiService'
-import {ParkDisplay} from '../components/ParkDisplay'
+import {ParkCard} from '../components/ParkCard'
 
 export default function ViewParks({ navigation }: RootTabScreenProps<'ViewParks'>) {
     const [parks, setParks] = useState<any>(undefined)
@@ -23,7 +23,7 @@ export default function ViewParks({ navigation }: RootTabScreenProps<'ViewParks'
       <ScrollView>
         {parks && parks.map((park: any, key: any) => {
             return (
-              <ParkDisplay key={key} park={park} />
+              <ParkCard key={key} park={park} />
             )
         })
         }

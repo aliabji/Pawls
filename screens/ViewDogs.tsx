@@ -4,12 +4,14 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
 import {getDogs} from '../utils/apiService';
+import {DogCard} from '../components/DogCard'
 
-export default function ViewDogs({ navigation }: RootTabScreenProps<'ViewDogs'>) {
+export default function ViewDogs({ navigation, route: {params} }: RootTabScreenProps<'ViewDogs'>) {
     const [dogs, setDogs] = useState<any>(undefined)
 
     useEffect(() => {
-      getDogs(1).then((res) => {
+      getDogs(params.id).then((res) => {
+        console.log(res.dogs, params)
         if (res.dogs) {
           setDogs(res.dogs)
         } else {
@@ -23,9 +25,7 @@ export default function ViewDogs({ navigation }: RootTabScreenProps<'ViewDogs'>)
               <ScrollView>
         {dogs && dogs.map((dog: any, key: any) => {
             return (
-                <View key={key}>
-                    <Text>{dog.name} {dog.breed} {dog.age}</Text>
-                </View>
+              <DogCard key={key} dog={dog} />
             )
         })
         }

@@ -5,14 +5,16 @@ import {
   TextInput,
   StyleSheet
 } from 'react-native'
-import { Text } from './Themed';
+// import { Text } from './Themed';
 import {createDog} from '../utils/apiService';
 import {ActionResponseBlock} from './ActionResponseBlock';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {Button} from 'react-native-ui-lib'
-import {ParkDisplay} from './ParkDisplay';
-import {UserDisplay} from './UserDisplay';
+// import {Button} from 'react-native-ui-lib'
+import {ParkCard} from './ParkCard';
+import {UserCard} from './UserCard';
 import { getLocalLongTime } from '../utils/DateUtils';
+import { Button, Card, Title, Text, Paragraph, Avatar } from 'react-native-paper';
+
 
 export interface CreateVisitProps {
     friends: any[];
@@ -49,54 +51,61 @@ export default function CreateVisit(props: CreateVisitProps) {
     }
 
     const datePickerChangeHandler = (event: any) => {
-        setDatetime(event.nativeEvent.timestamp)
-        setShowPicker(false)
+        console.log("*********** ", event)
+        if (event.type === "set") {
+            setDatetime(event.nativeEvent.timestamp)
+            setShowPicker(false)
+        }
     }
 
-    console.log(datetime && getLocalLongTime(datetime))
- 
+    console.log(datetime, park)
+
     return (
-        <ScrollView>
-            <View style={styles.container}>
-                <Text>Let's go to the park</Text>
-                <Text>You must pick a time and select a park to create a visit.</Text>
-                <Button label="Pick a time" onPress={() => setShowPicker(true)} />
+        <View>
+            <ScrollView>
+                <Text style={{color: "white"}}>Let's go to the park</Text>
+                <Text style={{color: "white"}}>You must pick a time and select a park to create a visit.</Text>
+                <Button mode="contained" onPress={() => setShowPicker(true)}>Pick a time</Button>
                 {showPicker && (
                     <DateTimePicker
-                    testID="dateTimePicker"
-                    value={now}
-                    minimumDate={now}
-                    mode={'time'}
-                    is24Hour={false}
-                    display="default"
-                    onChange={(event: any) => datePickerChangeHandler(event)}
+                        testID="dateTimePicker"
+                        value={now}
+                        minimumDate={now}
+                        mode={'time'}
+                        is24Hour={false}
+                        display="default"
+                        onChange={(event: any) => datePickerChangeHandler(event)}
                     />
                 )}
                 {datetime && (
-                    <Text>{getLocalLongTime(datetime)}</Text>
+                    <Text style={{color: "white"}}>{getLocalLongTime(datetime)}</Text>
                 )}
-                <Text>Pick friends to invite</Text>
-                {props.friends.map((friend, key) => {
-                    return (
-                        <UserDisplay key={key} user={friend} onButtonPress={() => setFriendsToInvite([...friendsToInvite, friend.id])} buttonLabel="Select friend" />
-                    )
-                })}
-                <Text>Which park do you want to go to?</Text>
-                {props.parks.map((park, key) => {
-                    return (
-                        <ParkDisplay key={key} park={park} onButtonPress={() => setPark(park)} />
-                    )
-                })}
+                <Text style={{color: "white"}}>Pick friends to invite</Text>
+                    <ScrollView>
+                    {props.friends.map((friend, key) => {
+                        return (
+                            <UserCard key={key} user={friend} onButtonPress={() => setFriendsToInvite([...friendsToInvite, friend.id])} buttonLabel="Select friend" />
+                        )
+                    })}
+                </ScrollView>
+                <Text style={{color: "white"}}>Which park do you want to go to?</Text>
+                <ScrollView>
+                    {props.parks.map((park, key) => {
+                        return (
+                            <ParkCard key={key} park={park} onButtonPress={() => setPark(park)} buttonLabel="Select park" />
+                        )
+                    })}
+                </ScrollView>                
                 <Button
-                    label='Schedule Visit'
-                    disabled={!datetime && !park}
+                    disabled={!datetime || !park}
                     onPress={() => submit()}
-                />
+                    mode="contained"
+                >Schedule Visit</Button>
                 {showResponseBlock && (
                     <ActionResponseBlock success={true} message={responseMessage} />
                 )}
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </View>
     )
 }
 

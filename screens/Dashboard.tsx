@@ -27,9 +27,9 @@ export default function Dashboard({ navigation, route: {params} }: RootTabScreen
     <View style={styles.container}>
       <Text style={{color: "white"}}>Welcome back, {params && params.username}!</Text>
       <Text style={{color: "white"}}>Dashboard</Text>
-      <Button onPress={() => navigation.push('AddParks')}>Add parks</Button>
-      <Button onPress={() => navigation.push('ViewParks')}>View my parks</Button>
-      <Button onPress={() => navigation.push('ViewDogs')}>View my dogs</Button>
+      <Button onPress={() => navigation.push('AddParks', params)}>Add parks</Button>
+      <Button onPress={() => navigation.push('ViewParks', params)}>View my parks</Button>
+      <Button onPress={() => navigation.push('ViewDogs', params)}>View my dogs</Button>
       <Button onPress={() => navigation.push('CreateParkVisit', params)}>Create park visit</Button>
       {visits.length > 0 && (
         <ScrollView>
