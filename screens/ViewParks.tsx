@@ -3,36 +3,27 @@ import {useEffect, useState} from 'react'
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
+import {getParks} from '../utils/apiService'
+import {ParkDisplay} from '../components/ParkDisplay'
 
 export default function ViewParks({ navigation }: RootTabScreenProps<'ViewParks'>) {
     const [parks, setParks] = useState<any>(undefined)
   useEffect(() => {
-    fetch('http://192.168.68.127:3001/users/1/parks', {
-      headers: { 'Content-Type': 'application/json' },
-      method: 'GET'
-      }).then((data) => data.json()).then((res) =>{
-          console.log(res)
-        if (res.parks) {
-            // console.log("logged in ", res)
-        //   navigation.replace('Dashboard', res.user)
+    getParks().then((res) => {
+      if (res.parks) {
         setParks(res.parks)
-        } else {
-            console.log("no parks found")
-        }
-      })
-      .catch((err) => {
-        console.log('error checking login: ', err)
-      })
+    } else {
+        console.log("no parks found")
+    }
+    })
   
   }, [])
   return (
     <View style={styles.container}>
-              <ScrollView>
+      <ScrollView>
         {parks && parks.map((park: any, key: any) => {
             return (
-                <View key={key}>
-                    <Text>{park.name} {park.vicinity}</Text>
-                </View>
+              <ParkDisplay key={key} park={park} />
             )
         })
         }
@@ -46,6 +37,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection:'column',
   },
   title: {
     fontSize: 20,

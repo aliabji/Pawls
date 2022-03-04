@@ -3,26 +3,18 @@ import {useEffect} from 'react'
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
+import {isLoggedIn} from '../utils/apiService';
 
 export default function Welcome({ navigation }: RootTabScreenProps<'Welcome'>) {
   useEffect(() => {
-    fetch('http://192.168.68.127:3001/logged_in', {
-      headers: { 'Content-Type': 'application/json' },
-      method: 'GET'
-      }).then((data) => data.json()).then((res) =>{
-        if (res.logged_in) {
-            // console.log("logged in ", res)
-          navigation.replace('Dashboard', res.user)
-        } else {
-            console.log("not logged in ", res)
-          navigation.replace('UserAuthStart')
-
-        }
-      })
-      .catch((err) => {
-        console.log('error checking login: ', err)
-      })
-  
+    isLoggedIn().then(res => {
+      if (res.user) {
+        // navigation.push('SetupWizard', res.user)
+          navigation.push('Dashboard', res.user)
+      } else {
+          navigation.push('UserAuthStart')
+      }
+    })
   }, [])
   return (
     <View style={styles.container}>

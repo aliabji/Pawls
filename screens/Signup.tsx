@@ -9,13 +9,13 @@ import {
 
 export default class SignUp extends React.Component {
   state = {
-    username: '', password: '', email: '', phone_number: ''
+    username: '', password: '', name: ''
   }
   onChangeText = (key: any, val: any) => {
     this.setState({ [key]: val })
   }
   signUp = async () => {
-    const { username, password, email, phone_number } = this.state
+    const { username, password, name } = this.state
     try {
       // here place your signup logic
       console.log('user successfully signed up!: ')
@@ -44,17 +44,10 @@ export default class SignUp extends React.Component {
         />
         <TextInput
           style={styles.input}
-          placeholder='Email'
+          placeholder='Name'
           autoCapitalize="none"
           placeholderTextColor='white'
-          onChangeText={val => this.onChangeText('email', val)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder='Phone Number'
-          autoCapitalize="none"
-          placeholderTextColor='white'
-          onChangeText={val => this.onChangeText('phone_number', val)}
+          onChangeText={val => this.onChangeText('name', val)}
         />
         <Button
           title='Sign Up'

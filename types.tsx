@@ -19,6 +19,7 @@ export type RootStackParamList = {
   NotFound: undefined;
   Signin: any;
   Signup: any;
+  SetupWizard: any;
   AddDogs: any;
   Dashboard: any;
   Welcome: any;
@@ -26,6 +27,8 @@ export type RootStackParamList = {
   AddParks: any;
   ViewDogs: any;
   ViewParks: any;
+  CreateParkVisit: any;
+  ParkVisitDetails: any;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
@@ -38,20 +41,17 @@ export type RootTabParamList = {
   TabTwo: undefined;
   Signup: any;
   Signin: any;
+  SetupWizard: any;
   Dashboard: any;
   Welcome: any;
   AddParks: any;
   ViewDogs: any;
   ViewParks: any;
+  CreateParkVisit: any;
+  ParkVisitDetails: any;
 };
-
-export type UserParams = {
-  user?: any
-}
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
   BottomTabScreenProps<RootTabParamList, Screen>,
   NativeStackScreenProps<RootStackParamList>
 >;
-
-// export type 

@@ -7,10 +7,11 @@ import {
   StyleSheet
 } from 'react-native'
 import {LOCAL_API_ADDRESS} from '../constants/server'
+import {logIn} from '../utils/apiService';
 
 export default class Signin extends React.Component<any> {
   state = {
-    username: '', password: '', email: '', phone_number: ''
+    username: '', password: '', email: ''
   }
   onChangeText = (key: any, val: any) => {
     this.setState({ [key]: val })
@@ -23,22 +24,15 @@ export default class Signin extends React.Component<any> {
       }
     }
     try {
-      const res = fetch('http://192.168.68.127:3001/login', {
-        headers: { 'Content-Type': 'application/json' },
-        method: 'POST',
-        body: JSON.stringify(creds)
-        }).then((data) => data.json()).then((res) =>{
-          if (res.logged_in === true) {
-            this.props.navigation.navigate('Dashboard', res.user)
-            console.log('user successfully signed up!: ')
-          } else {
-            console.log("log in failed ", res.errors)
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-          console.log('error signing up: ', err)
-        })
+      logIn(creds).then(res => {
+        if (res.user) {
+          // this.props.navigation.push('Dashboard', res.user)
+          this.props.navigation.push('SetupWizard', res.user)
+        } else {
+          console.log("log in failed ", res)
+
+        }
+      })
     } catch (err) {
       console.log("Unrecoverable error occured ", err)
     }

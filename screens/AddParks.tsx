@@ -3,7 +3,6 @@ import {useState, useEffect} from 'react';
 import { Text, View } from '../components/Themed';
 import {LogOutButton} from '../components/LogOutButton';
 import { RootTabScreenProps } from '../types';
-import {GOOGLE_PLACES_API_KEY} from '../secrets';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import * as Location from 'expo-location';
 import {ParkDisplay} from '../components/ParkDisplay';
@@ -65,7 +64,6 @@ export default function AddParks({ navigation, route: {params} }: RootTabScreenP
         })
         }
       </ScrollView>
-      <Text>testS</Text>
       <GooglePlacesAutocomplete
         placeholder="parks"
         GooglePlacesSearchQuery={
@@ -73,7 +71,7 @@ export default function AddParks({ navigation, route: {params} }: RootTabScreenP
         }
         query={
             {
-                key: GOOGLE_PLACES_API_KEY,
+                key: process.env.GOOGLE_PLACES_API_KEY,
             }
         }
         onPress={(data, details) => console.log(data, details)}
